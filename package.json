@@ -1,0 +1,28 @@
+{
+  "name": "frontend-project-lvl2",
+  "version": "0.0.1",
+  "description": "Difference generator",
+  "type": "module",
+  "main": "src/index.js",
+  "engines": {
+    "node": "14"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pvl-grdv/frontend-project-lvl2.git"
+  },
+  "author": "Pavel G",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pvl-grdv/frontend-project-lvl2/issues"
+  },
+  "homepage": "https://github.com/pvl-grdv/frontend-project-lvl2#readme",
+  "dependencies": {
+    "commander": "^5.1.0"
+  },
+  "devDependencies": {
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb-base": "^14.1.0",
+    "eslint-plugin-import": "^2.20.2"
+  }
+}
