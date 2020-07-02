@@ -3,9 +3,12 @@
   "version": "0.0.1",
   "description": "Difference generator",
   "type": "module",
+  "bin": {
+    "gendiff": "bin/gendiff.js"
+  },
   "main": "src/index.js",
   "engines": {
-    "node": "14"
+    "node": ">=14"
   },
   "repository": {
     "type": "git",
