@@ -7,7 +7,6 @@ const genDiff = (pathToFile1, pathToFile2) => {
   const dataBefore = readFile(pathToFile1);
   const dataAfter = readFile(pathToFile2);
   const allKeys = _.uniq(Object.keys(dataBefore), Object.keys(dataAfter));
-  console.log(allKeys);
   const test = allKeys.map((key) => {
     if (!_.has(dataAfter, key)) {
       return [`  - ${key}: ${dataBefore[key]}`];
