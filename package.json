@@ -2,14 +2,21 @@
   "name": "frontend-project-lvl2",
   "version": "0.0.1",
   "description": "Difference generator",
-  "type": "module",
   "bin": {
     "gendiff": "bin/gendiff.js"
   },
-  "main": "src/index.js",
   "engines": {
     "node": ">=14"
   },
+  "type": "module",
+  "jest": {
+    "testEnvironment": "node",
+    "transform": {}
+  },
+  "scripts": {
+    "test": "npx -n --experimental-vm-modules jest"
+  },
+  "main": "src/index.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/pvl-grdv/frontend-project-lvl2.git"
@@ -21,11 +28,17 @@
   },
   "homepage": "https://github.com/pvl-grdv/frontend-project-lvl2#readme",
   "dependencies": {
+    "@jest/globals": "^26.0.1",
+    "lodash": "^4.17.15",
     "commander": "^5.1.0"
   },
   "devDependencies": {
-    "eslint": "^6.8.0",
+    "debug": "^4.1.1",
+    "eslint": "^7.0.0",
     "eslint-config-airbnb-base": "^14.1.0",
-    "eslint-plugin-import": "^2.20.2"
+    "eslint-plugin-import": "^2.20.2",
+    "eslint-plugin-jest": "^23.10.0",
+    "jest": "^26.0.1",
+    "jest-cli": "^26.0.1"
   }
 }
