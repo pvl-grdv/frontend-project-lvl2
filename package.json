@@ -29,7 +29,7 @@
   "homepage": "https://github.com/pvl-grdv/frontend-project-lvl2#readme",
   "dependencies": {
     "@jest/globals": "^26.0.1",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.19",
     "commander": "^5.1.0"
   },
   "devDependencies": {
