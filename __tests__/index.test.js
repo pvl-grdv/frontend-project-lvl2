@@ -1,8 +1,8 @@
 import fs from 'fs';
-import { dirname, path } from 'path';
+import * as path from 'path';
 import genDiff from '../src';
 
-const __dirname = dirname(__filename);
+const __dirname = path.dirname(__filename);
 
 const getFixturePath = (filename) => path.join('__tests__/__fixtures__/', `${filename}`);
 
