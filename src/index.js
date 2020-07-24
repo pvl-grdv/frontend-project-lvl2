@@ -1,19 +1,19 @@
-import fs from 'fs';
 import _ from 'lodash';
+import parser from './parsers.js';
+import { readFile, getExt } from './utils.js';
 
-const readFile = (pathToFile) => JSON.parse(fs.readFileSync(pathToFile, 'utf-8'));
+const genDiff = (configPath1, configPath2) => {
+  const dataBefore = parser(readFile(configPath1), getExt(configPath1));
+  const dataAfter = parser(readFile(configPath2), getExt(configPath2));
 
-const genDiff = (pathToFile1, pathToFile2) => {
-  const dataBefore = readFile(pathToFile1);
-  const dataAfter = readFile(pathToFile2);
+  const allKeys = _.union(Object.keys(dataBefore), Object.keys(dataAfter));
 
-  const allKeys = _.uniq(Object.keys(dataBefore), Object.keys(dataAfter));
   const difference = allKeys.map((key) => {
-    if (!_.has(dataAfter, key)) {
-      return [`  - ${key}: ${dataBefore[key]}`];
-    }
     if (!_.has(dataBefore, key)) {
       return [`  + ${key}: ${dataAfter[key]}`];
+    }
+    if (!_.has(dataAfter, key)) {
+      return [`  - ${key}: ${dataBefore[key]}`];
     }
     if (dataBefore[key] !== dataAfter[key]) {
       return [`  - ${key}: ${dataBefore[key]}\n  + ${key}: ${dataAfter[key]}`];
@@ -22,4 +22,5 @@ const genDiff = (pathToFile1, pathToFile2) => {
   });
   return `{\n${difference.join('\n')}\n}`;
 };
+
 export default genDiff;
