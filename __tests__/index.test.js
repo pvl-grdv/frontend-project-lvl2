@@ -6,11 +6,11 @@ import genDiff from '../src';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-const getFixturePath = (filename) => path.join('__tests__/__fixtures__/', `${filename}`);
+const getPath = (filename) => path.join(__dirname, `__fixtures__/${filename}`);
 
 test('compare flat JSON', () => {
-  const before = getFixturePath('flatBefore.json');
-  const after = getFixturePath('flatAfter.json');
-  const result = fs.readFileSync(path.resolve(__dirname, getFixturePath('flatResult')), 'utf-8');
+  const before = getPath('flatBefore.json');
+  const after = getPath('flatAfter.json');
+  const result = fs.readFileSync(getPath('flatResult'), 'utf-8');
   expect(genDiff(before, after)).toBe(result);
 });

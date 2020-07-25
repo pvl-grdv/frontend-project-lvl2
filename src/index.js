@@ -1,10 +1,10 @@
 import _ from 'lodash';
 import parser from './parsers.js';
-import { readFile, getExt } from './utils.js';
+import { readFile, getType } from './utils';
 
 const genDiff = (configPath1, configPath2) => {
-  const dataBefore = parser(readFile(configPath1), getExt(configPath1));
-  const dataAfter = parser(readFile(configPath2), getExt(configPath2));
+  const dataBefore = parser(readFile(configPath1), getType(configPath1));
+  const dataAfter = parser(readFile(configPath2), getType(configPath2));
 
   const allKeys = _.union(Object.keys(dataBefore), Object.keys(dataAfter));
 
