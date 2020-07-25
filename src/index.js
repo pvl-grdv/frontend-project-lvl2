@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import parser from './parsers.js';
-import { readFile, getType } from './utils';
+import { readFile, getType } from './utils.js';
 
 const genDiff = (configPath1, configPath2) => {
   const dataBefore = parser(readFile(configPath1), getType(configPath1));
