@@ -11,5 +11,5 @@ Find difference between JSON files:
 Find difference between YAML files:
 [![asciicast](https://asciinema.org/a/6nev3BtrzXZi0bZm5iwpzuJ83.svg)](https://asciinema.org/a/6nev3BtrzXZi0bZm5iwpzuJ83)
 
-
-
+Find difference between INI files:
+[![asciicast](https://asciinema.org/a/e1gtqrmXVtjqMU9pulnlxSaZJ.svg)](https://asciinema.org/a/e1gtqrmXVtjqMU9pulnlxSaZJ)
