@@ -1,26 +1,40 @@
 import _ from 'lodash';
 import parser from './parsers.js';
 import { readFile, getType } from './utils.js';
+import render from './formatters';
 
-const genDiff = (configPath1, configPath2) => {
-  const dataBefore = parser(readFile(configPath1), getType(configPath1));
-  const dataAfter = parser(readFile(configPath2), getType(configPath2));
+const genDiffTree = (dataBefore, dataAfter) => {
+  const allKeys = _.union(Object.keys(dataBefore), Object.keys(dataAfter)).sort();
+  const diff = allKeys.map((key) => {
+    const valueOld = dataBefore[key];
+    const valueNew = dataAfter[key];
 
-  const allKeys = _.union(Object.keys(dataBefore), Object.keys(dataAfter));
-
-  const difference = allKeys.map((key) => {
     if (!_.has(dataBefore, key)) {
-      return [`  + ${key}: ${dataAfter[key]}`];
+      return { name: key, type: 'new', value: valueNew };
     }
     if (!_.has(dataAfter, key)) {
-      return [`  - ${key}: ${dataBefore[key]}`];
+      return { name: key, type: 'deleted', value: valueOld };
     }
-    if (dataBefore[key] !== dataAfter[key]) {
-      return [`  - ${key}: ${dataBefore[key]}\n  + ${key}: ${dataAfter[key]}`];
+    if (valueOld === valueNew) {
+      return { name: key, type: 'unchanged', value: valueOld };
     }
-    return [`    ${key}: ${dataBefore[key]}`];
+    if (_.isObject(valueOld) && _.isObject(valueNew)) {
+      return { name: key, type: 'nested', children: genDiffTree(valueOld, valueNew) };
+    }
+    return {
+      name: key,
+      type: 'changed',
+      valueBefore: valueOld,
+      valueAfter: valueNew,
+    };
   });
-  return `{\n${difference.join('\n')}\n}`;
+  return diff;
 };
 
-export default genDiff;
+export default (firstConfig, secondConfig, format) => {
+  const dataBefore = parser(readFile(firstConfig), getType(firstConfig));
+  const dataAfter = parser(readFile(secondConfig), getType(secondConfig));
+  const diff = genDiffTree(dataBefore, dataAfter);
+  console.log(JSON.stringify(diff, null, 4));
+  return render(diff, format);
+};
