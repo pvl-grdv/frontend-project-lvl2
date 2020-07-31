@@ -9,12 +9,18 @@ const __dirname = dirname(__filename);
 const getPath = (filename) => path.join(__dirname, `__fixtures__/${filename}`);
 
 const fileTypes = ['json', 'yml', 'ini'];
+const outputFormats = ['complex'];
+
+const testArguments = outputFormats.flatMap((format) => (
+  fileTypes.map((filetype) => [filetype, format])
+));
+
 const readFile = (filepath) => fs.readFileSync(getPath(filepath), 'utf-8');
 
-test.each(fileTypes)('type %s', (type) => {
-  const before = getPath(`flatBefore.${type}`);
-  const after = getPath(`flatAfter.${type}`);
-  const actual = genDiff(before, after);
-  const expected = readFile('flatResult');
+test.each(testArguments)('type %s & output %s', (type, output) => {
+  const before = getPath(`${output}Before.${type}`);
+  const after = getPath(`${output}After.${type}`);
+  const actual = genDiff(before, after, 'stylish');
+  const expected = readFile(`${output}Result`);
   expect(actual).toBe(expected);
 });
