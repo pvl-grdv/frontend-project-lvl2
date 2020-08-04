@@ -5,7 +5,7 @@ import render from './formatters';
 
 const genDiffTree = (dataBefore, dataAfter) => {
   const allKeys = _.union(Object.keys(dataBefore), Object.keys(dataAfter)).sort();
-  const diff = allKeys.map((key) => {
+  return allKeys.map((key) => {
     const valueOld = dataBefore[key];
     const valueNew = dataAfter[key];
 
@@ -28,13 +28,12 @@ const genDiffTree = (dataBefore, dataAfter) => {
       valueAfter: valueNew,
     };
   });
-  return diff;
 };
 
 export default (firstConfig, secondConfig, format) => {
   const dataBefore = parser(readFile(firstConfig), getType(firstConfig));
   const dataAfter = parser(readFile(secondConfig), getType(secondConfig));
   const diff = genDiffTree(dataBefore, dataAfter);
-  console.log(JSON.stringify(diff, null, 4));
+  // console.log('собственно ДЕРЕВО:', JSON.stringify(diff, null, 4));
   return render(diff, format);
 };
