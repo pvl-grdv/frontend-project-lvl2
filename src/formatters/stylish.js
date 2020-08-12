@@ -4,14 +4,12 @@ const initialIndent = 2;
 const extraIndent = 4;
 const generateIndent = (depth) => ' '.repeat(initialIndent + depth * extraIndent);
 
-// const generateIndent = (n) => ' '.repeat(n);
-
 const stringify = (item, depth) => {
   if (!_.isObject(item)) {
     return item;
   }
   const result = Object.entries(item)
-    .map(([key, value]) => `${generateIndent(depth + 1)}  ${key}: ${stringify(value)}`);
+    .map(([key, value]) => `${generateIndent(depth + 1)}  ${key}: ${stringify(value, depth + 1)}`);
   return ['{', ...result, `${generateIndent(depth)}  }`].join('\n');
 };
 
@@ -23,7 +21,7 @@ const render = (diff, depth = 0) => diff.map((node) => {
   switch (type) {
     case 'unchanged':
       return `${generateIndent(depth)}  ${key}: ${stringify(value, depth)}`;
-    case 'new':
+    case 'added':
       return `${generateIndent(depth)}+ ${key}: ${stringify(value, depth)}`;
     case 'deleted':
       return `${generateIndent(depth)}- ${key}: ${stringify(value, depth)}`;
