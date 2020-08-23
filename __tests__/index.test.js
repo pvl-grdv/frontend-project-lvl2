@@ -9,16 +9,18 @@ const __dirname = dirname(__filename);
 const getPath = (filename) => path.join(__dirname, '__fixtures__', filename);
 
 const fileTypes = ['json', 'yml', 'ini'];
-const fileFormats = ['nested', 'flat'];
+const outputTypes = ['nested', 'plain'];
 
-const testArguments = fileFormats.flatMap((format) => (
+const testArguments = outputTypes.flatMap((format) => (
   fileTypes.map((filetype) => [filetype, format])
 ));
 
-test.each(testArguments)('type %s %s', (type, output) => {
-  const before = getPath(`${output}Before.${type}`);
-  const after = getPath(`${output}After.${type}`);
-  const actual = genDiff(before, after, 'stylish');
-  const expected = fs.readFileSync(getPath(`${output}Result`), 'utf-8');
+console.log(testArguments);
+
+test.each(testArguments)('type: %s, output format: %s', (type, format) => {
+  const before = getPath(`nestedBefore.${type}`);
+  const after = getPath(`nestedAfter.${type}`);
+  const actual = genDiff(before, after, format);
+  const expected = fs.readFileSync(getPath(`${format}Result`), 'utf-8');
   expect(actual).toBe(expected);
 });
