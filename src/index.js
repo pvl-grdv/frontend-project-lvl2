@@ -35,6 +35,5 @@ export default (firstConfig, secondConfig, format) => {
   const dataBefore = parser(readFile(firstConfig), getType(firstConfig));
   const dataAfter = parser(readFile(secondConfig), getType(secondConfig));
   const diff = genDiffTree(dataBefore, dataAfter);
-  // console.log('собственно ДЕРЕВО:', JSON.stringify(diff, null, 4));
   return render(diff, format);
 };

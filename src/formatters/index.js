@@ -1,7 +1,9 @@
 import makeStylish from './stylish.js';
+import makePlain from './plain.js';
 
 const outputFormat = {
-  stylish: makeStylish,
+  nested: makeStylish,
+  plain: makePlain,
 };
 
-export default (diff, format) => outputFormat[format](diff);
+export default (tree, format) => outputFormat[format](tree);
