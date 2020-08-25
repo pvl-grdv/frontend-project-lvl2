@@ -10,7 +10,7 @@ program
   .description('Compares two configuration files and shows a difference.')
   .usage('[options] <filepath1> <filepath2>')
   .helpOption('-h, --help', 'output usage information')
-  .option('-f, --format <type>', 'output format [stylish, plain, json]', 'stylish')
+  .option('-f, --format <type>', 'output format [nested, plain, json]', 'nested')
   .arguments('<firstConfig> <secondConfig>')
   .action((firstConfig, secondConfig) => {
     console.log(genDiff(firstConfig, secondConfig, program.format));
