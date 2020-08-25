@@ -9,13 +9,11 @@ const __dirname = dirname(__filename);
 const getPath = (filename) => path.join(__dirname, '__fixtures__', filename);
 
 const fileTypes = ['json', 'yml', 'ini'];
-const outputTypes = ['nested', 'plain'];
+const outputTypes = ['nested', 'plain', 'json'];
 
 const testArguments = outputTypes.flatMap((format) => (
   fileTypes.map((filetype) => [filetype, format])
 ));
-
-console.log(testArguments);
 
 test.each(testArguments)('type: %s, output format: %s', (type, format) => {
   const before = getPath(`nestedBefore.${type}`);
