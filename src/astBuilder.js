@@ -1,7 +1,7 @@
 import _ from 'lodash';
 
 const astBuilder = (dataBefore, dataAfter) => {
-  const allKeys = _.union(Object.keys(dataBefore), Object.keys(dataAfter)).sort();
+  const allKeys = _.sortBy(_.union(Object.keys(dataBefore), Object.keys(dataAfter)));
 
   return allKeys.map((key) => {
     const valueOld = dataBefore[key];
