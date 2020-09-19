@@ -1,3 +1,4 @@
+/* eslint-disable array-callback-return */
 const outputValues = {
   string: (value) => `'${value}'`,
   number: (value) => value,
@@ -9,7 +10,7 @@ const getOutputValue = (value) => outputValues[(typeof value)](value);
 
 const renderPlain = (diff) => {
   const iter = (data, pathName) => {
-    const result = data.filter((node) => node.type !== 'unchanged').map((node) => {
+    const result = data.map((node) => {
       const {
         name, type, value, valueBefore, valueAfter, children,
       } = node;
@@ -25,11 +26,13 @@ const renderPlain = (diff) => {
           return `Property '${fullName}' was updated. From ${getOutputValue(valueBefore)} to ${getOutputValue(valueAfter)}`;
         case 'nested':
           return iter(children, [...pathName, name]);
+        case 'unchanged':
+          return null;
         default:
           throw new Error(`Unknown node type: '${type}'`);
       }
     });
-    return result.join('\n');
+    return result.filter((node) => node !== null).join('\n');
   };
   return iter(diff, []);
 };
