@@ -21,29 +21,10 @@ const iniParser = (content) => {
   return iter(data);
 };
 
-const ymlParser = (content) => {
-  const data = yaml.safeLoad(content);
-
-  const iter = (node) => Object.entries(node).reduce((acc, [key, value]) => {
-    if (_.isObject(value)) {
-      return { ...acc, [key]: iter(value) };
-    }
-    if (typeof (value) === 'boolean') {
-      return { ...acc, [key]: value };
-    }
-    if (!Number.isNaN(Number(value))) {
-      return { ...acc, [key]: Number(value) };
-    }
-    return { ...acc, [key]: value };
-  }, {});
-
-  return iter(data);
-};
-
 const parsers = {
   json: JSON.parse,
-  yml: ymlParser,
-  yaml: ymlParser,
+  yml: yaml.safeLoad,
+  yaml: yaml.safeLoad,
   ini: iniParser,
 };
 
