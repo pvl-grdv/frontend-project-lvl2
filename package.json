@@ -16,7 +16,6 @@
   "scripts": {
     "test": "npx -n --experimental-vm-modules jest"
   },
-  "main": "index.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/pvl-grdv/frontend-project-lvl2.git"
