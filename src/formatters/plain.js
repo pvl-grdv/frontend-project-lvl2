@@ -1,16 +1,19 @@
 /* eslint-disable array-callback-return */
-const outputValues = {
-  string: (value) => `'${value}'`,
-  number: (value) => value,
-  object: () => '[complex value]',
-  boolean: (value) => value,
-};
 
-const getOutputValue = (value) => outputValues[(typeof value)](value);
+const getOutputValue = (value) => {
+  switch (typeof value) {
+    case 'string':
+      return `'${value}'`;
+    case 'object':
+      return '[complex value]';
+    default:
+      return value;
+  }
+};
 
 const renderPlain = (diff) => {
   const iter = (data, pathName) => {
-    const result = data.map((node) => {
+    const result = data.flatMap((node) => {
       const {
         name, type, value, valueBefore, valueAfter, children,
       } = node;
@@ -27,12 +30,12 @@ const renderPlain = (diff) => {
         case 'nested':
           return iter(children, [...pathName, name]);
         case 'unchanged':
-          return null;
+          return [];
         default:
           throw new Error(`Unknown node type: '${type}'`);
       }
     });
-    return result.filter((node) => node !== null).join('\n');
+    return result.join('\n');
   };
   return iter(diff, []);
 };
