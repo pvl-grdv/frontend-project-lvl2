@@ -7,7 +7,7 @@ const outputFormats = {
   json: JSON.stringify,
 };
 
-export default (tree, format) => {
+export default (tree, format = 'nested') => {
   const formatTree = outputFormats[format];
   return formatTree(tree);
 };
